@@ -78,8 +78,6 @@ ARG MONGO_ORCH_VERSION_NAME=latest
 ENV MONGODB_VERSION=${MONGO_ORCH_VERSION_NAME}
 ENV MONGO_MAJOR=${MONGO_MAJOR}
 ENV MONGO_VERSION=${MONGO_VERSION}
-ENV PROJECT_ORCHESTRATION_HOME=/var/www/orch/.evergreen/orchestration
-ENV MONGO_ORCHESTRATION_HOME=/var/www/orch/.evergreen/orchestration
 ENV DRIVERS_TOOLS=/etc/mongodb_pack
 ENV PATH=/etc/mongodb_pack/mongodb/bin:$PATH
 
