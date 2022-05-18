@@ -1,0 +1,204 @@
+version: '3.8'
+
+networks:
+  backend:
+
+services:
+
+  mongo500: &mongo500
+    build:
+      context: mongo/5
+      dockerfile: Dockerfile5
+      args:
+        MONGO_PACKAGE: 'mongodb-enterprise'
+        MONGO_REPO: 'repo.mongodb.com'
+        MONGO_KEY: '5.0'
+        MONGO_MAJOR: '5.0'
+        MONGO_VERSION: '5.0.0'
+    command: mongod --replSet rs0 --setParameter enableTestCommands=1 --dbpath /data/db --setParameter transactionLifetimeLimitSeconds=5
+    ports:
+      - "${MONGO_500_PORT}:27017"
+    networks:
+      - backend
+#    volumes:
+#      - ./mongo/5/db:/data/db
+#      - ./mongo/5/configdb:/data/configdb
+#      - ./mongo/5/log:/data/log
+#      - ./mongo/5/dump:/dump
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+    environment:
+      TZ: ${WORKSPACE_TIMEZONE}
+
+
+
+  mongo506: &mongo506
+    build:
+      context: mongo/5
+      dockerfile: Dockerfile5
+      args:
+        MONGO_PACKAGE: 'mongodb-enterprise'
+        MONGO_REPO: 'repo.mongodb.com'
+        MONGO_KEY: '5.0'
+        MONGO_MAJOR: '5.0'
+        MONGO_VERSION: '5.0.6'
+    command: mongod --replSet rs0 --setParameter enableTestCommands=1 --dbpath /data/db --setParameter transactionLifetimeLimitSeconds=5
+    ports:
+      - "${MONGO_506_PORT}:27017"
+    networks:
+      - backend
+#    volumes:
+#      - ./mongo/5/db:/data/db
+#      - ./mongo/5/configdb:/data/configdb
+#      - ./mongo/5/log:/data/log
+#      - ./mongo/5/dump:/dump
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+    environment:
+      TZ: ${WORKSPACE_TIMEZONE}
+
+
+
+  mongo508: &mongo508
+    build:
+      context: mongo/5
+      dockerfile: Dockerfile5
+      args:
+        MONGO_PACKAGE: 'mongodb-enterprise'
+        MONGO_REPO: 'repo.mongodb.com'
+        MONGO_KEY: '5.0'
+        MONGO_MAJOR: '5.0'
+        MONGO_VERSION: '5.0.8'
+    command: mongod --replSet rs0 --setParameter enableTestCommands=1 --dbpath /data/db --setParameter transactionLifetimeLimitSeconds=5
+    ports:
+      - "${MONGO_508_PORT}:27017"
+    networks:
+      - backend
+#    volumes:
+#      - ./mongo/5/db:/data/db
+#      - ./mongo/5/configdb:/data/configdb
+#      - ./mongo/5/log:/data/log
+#      - ./mongo/5/dump:/dump
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+    environment:
+      TZ: ${WORKSPACE_TIMEZONE}
+
+
+
+  mongo530: &mongo530
+    build:
+      context: mongo/dev-sources
+      dockerfile: Dockerfile
+      args:
+        DEBIAN_VERSION_NAME: 'buster'
+        MONGO_ORCH_VERSION_NAME: 'rapid'
+        MONGO_MAJOR: '5.3'
+        MONGO_VERSION: '5.3.1'
+    command: mongod --replSet rs0 --setParameter enableTestCommands=1 --dbpath /data/db --setParameter transactionLifetimeLimitSeconds=5
+    ports:
+      - "${MONGO_530_PORT}:27017"
+    networks:
+      - backend
+#    volumes:
+#      - ./mongo/dev-sources/db:/data/db
+#      - ./mongo/dev-sources/configdb:/data/configdb
+#      - ./mongo/dev-sources/log:/data/log
+#      - ./mongo/dev-sources/dump:/dump
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+    environment:
+      TZ: ${WORKSPACE_TIMEZONE}
+
+
+
+  mongo600: &mongo600
+    build:
+      context: mongo/6
+      dockerfile: Dockerfile6-custom-downloader
+      args:
+        MONGO_PACKAGE: 'mongodb-enterprise'
+        MONGO_REPO: 'repo.mongodb.com'
+        MONGO_KEY: '6.0'
+        MONGO_MAJOR: '6.0'
+        MONGO_VERSION: '6.0.0~latest'
+    command: mongod --replSet rs0 --setParameter enableTestCommands=1 --dbpath /data/db --setParameter transactionLifetimeLimitSeconds=5
+    ports:
+      - "${MONGO_600_PORT}:27017"
+    networks:
+      - backend
+#    volumes:
+#      - ./mongo/6/db:/data/db
+#      - ./mongo/6/configdb:/data/configdb
+#      - ./mongo/6/log:/data/log
+#      - ./mongo/6/dump:/dump
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+    environment:
+      TZ: ${WORKSPACE_TIMEZONE}
+
+
+
+  mongosetup: &mongosetup
+    build:
+      context: mongo/setup
+      dockerfile: Dockerfile
+    entrypoint: /setup.sh
+    ports:
+      - "8888:8888"
+    networks:
+      - backend
+    volumes:
+      - ./mongo/setup/setup.sh:/setup.sh
+
+
+
+  php80: &php80
+    build:
+      context: php/8.0
+      dockerfile: Dockerfile
+      args:
+        DOCKER_PHP_VERSION: '8.0'
+        TZ: ${WORKSPACE_TIMEZONE}
+        LIBRARY_REPO: ${LIBRARY_REPO}
+        DRIVER_REPO: ${DRIVER_REPO}
+        SPECIFICATIONS_REPO: ${SPECIFICATIONS_REPO}
+        COMPASS_REPO: ${COMPASS_REPO}
+    ports:
+      - "${PHP_8_0_PORT}:9000"
+    networks:
+      - backend
+    working_dir: /var/www
+    volumes:
+      - ./.ssh:/home/www-data/.ssh
+      - ./dev:/var/www
+      - ./php/8.0/conf/php.ini:/usr/local/etc/php/php.ini
+      - ./php/8.0/supervisor.d:/etc/supervisor.d
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+
+
+
+  php80wmongo: &php80wmongo
+    build:
+      context: php/8.0
+      dockerfile: Dockerfile-wmongo
+      args:
+        DOCKER_PHP_VERSION: '8.0'
+        TZ: ${WORKSPACE_TIMEZONE}
+        LIBRARY_REPO: ${LIBRARY_REPO}
+        DRIVER_REPO: ${DRIVER_REPO}
+        SPECIFICATIONS_REPO: ${SPECIFICATIONS_REPO}
+        COMPASS_REPO: ${COMPASS_REPO}
+    ports:
+      - "${PHP_8_0_WMONGO_PORT}:9000"
+    networks:
+      - backend
+    working_dir: /var/www
+    volumes:
+      - ./.ssh:/home/www-data/.ssh
+      - ./dev:/var/www
+      - ./php/8.0/conf/php.ini:/usr/local/etc/php/php.ini
+      - ./php/8.0/supervisor.d:/etc/supervisor.d
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
