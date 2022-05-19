@@ -8,4 +8,4 @@ COMPASS_REPO=${COMPASS_REPO:-}
 # Functions to fetch MongoDB binaries
 . functions.sh
 
-build_latest_driver
+install_library "$LIBRARY_REPO"
