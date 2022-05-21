@@ -69,6 +69,7 @@ set_mongo_server ()
 {
   MONGO_SERVER=$1
   cp phpunit.xml phpunit1.xml
-  sed -r "s/mongodb\:\/\/[^\/]+\//mongodb:\/\/$MONGO_SERVER:27017\//gi" phpunit1.xml | tee phpunit.xml
+  rm phpunit.xml
+  sed -r "s/mongodb\:\/\/[^\/]+\//mongodb:\/\/$MONGO_SERVER:27017\//gi" phpunit1.xml > phpunit.xml
   rm phpunit1.xml
 }

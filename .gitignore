@@ -1,0 +1,7 @@
+# Excludes
+.env
+dev/library
+dev/driver
+dev/specifications
+dev/compass
+development
