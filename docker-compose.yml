@@ -5,6 +5,58 @@ networks:
 
 services:
 
+  mongo400: &mongo400
+    build:
+      context: mongo/dev-sources
+      dockerfile: Dockerfile
+      args:
+        DEBIAN_VERSION_NAME: 'buster'
+        MONGO_ORCH_VERSION_NAME: '4.0'
+        MONGO_MAJOR: '4.0'
+        MONGO_VERSION: '4.0.28'
+    command: mongod --replSet rs0 --setParameter enableTestCommands=1 --dbpath /data/db --setParameter transactionLifetimeLimitSeconds=5
+    ports:
+      - "${MONGO_400_PORT}:27017"
+    networks:
+      - backend
+#    volumes:
+#      - ./mongo/dev-sources/db:/data/db
+#      - ./mongo/dev-sources/configdb:/data/configdb
+#      - ./mongo/dev-sources/log:/data/log
+#      - ./mongo/dev-sources/dump:/dump
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+    environment:
+      TZ: ${WORKSPACE_TIMEZONE}
+
+
+
+  mongo440: &mongo440
+    build:
+      context: mongo/dev-sources
+      dockerfile: Dockerfile
+      args:
+        DEBIAN_VERSION_NAME: 'buster'
+        MONGO_ORCH_VERSION_NAME: '4.4'
+        MONGO_MAJOR: '4.4'
+        MONGO_VERSION: '4.4.13'
+    command: mongod --replSet rs0 --setParameter enableTestCommands=1 --dbpath /data/db --setParameter transactionLifetimeLimitSeconds=5
+    ports:
+      - "${MONGO_440_PORT}:27017"
+    networks:
+      - backend
+#    volumes:
+#      - ./mongo/dev-sources/db:/data/db
+#      - ./mongo/dev-sources/configdb:/data/configdb
+#      - ./mongo/dev-sources/log:/data/log
+#      - ./mongo/dev-sources/dump:/dump
+#    stdin_open: true # docker run -i
+#    tty: true        # docker run -t
+    environment:
+      TZ: ${WORKSPACE_TIMEZONE}
+
+
+
   mongo500: &mongo500
     build:
       context: mongo/5
