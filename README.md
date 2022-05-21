@@ -10,7 +10,7 @@ This environment helps to start work on MongoDB PHP Library project.
 
 1. Fork your own projects in GitHub, which you will work with
 2. Copy file .env.dist to the .env
-3. Fill in correct links for LIBRARY_REPO, DRIVER_REPO, SPECIFICATIONS_REPO, COMPASS_REPO if needed (basicly there are specified common MongoDB links)
+3. Write your forked links for LIBRARY_REPO, DRIVER_REPO, SPECIFICATIONS_REPO, COMPASS_REPO if needed (there are common MongoDB links by default)
 4. Build docker container and run it:
 
 ## Build Docker container
