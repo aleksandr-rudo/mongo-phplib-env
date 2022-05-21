@@ -43,7 +43,7 @@ install_library ()
   cd ..
   cp scripts/library/* library/
   cd library
-  bash test.sh --stop-on-error
+  bash test.sh --version
   cd ..
 }
 
