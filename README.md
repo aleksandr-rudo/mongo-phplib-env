@@ -60,7 +60,7 @@ Note: Each time you restart your container you need to rebuild PHP Driver.
 
 To rebuild PHP Driver in case you restart development container for example, you can use script:
 
-    $ bash setup.sh
+    $ bash build.sh
 
 To reinstall some development project (in case, when you change project repository or some other cases) you can remove old directory and use one of the following scripts:
 
@@ -102,7 +102,7 @@ Run the current project build (building MongoDB Driver):
     $ cd driver
     $ bash build.sh
 
-The difference with setup.sh script is that the setup.sh is checking out the master branch of the current repository to build the driver. Current script works with the current project state.
+The difference between the root folder build.sh script and this one is when you run build from root folder it checks out the master branch of the current repository to build the driver. The script from Driver folder builds project current state.
 
 ### MongoDB Compass project special scripts
 
