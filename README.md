@@ -15,13 +15,9 @@ This environment helps to start work on MongoDB PHP Library project.
 
 ## Build Docker container
 
-Run:
-
     $ docker-compose build
 
 ## Run Docker container
-
-Run:
 
     $ docker-compose up -d
 
