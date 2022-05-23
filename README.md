@@ -21,7 +21,7 @@ This environment helps to start work on MongoDB PHP Library project.
 
     $ docker-compose up -d
 
-After all mongo containers started the "mongosetup" container will configure theirs replica set in 40 seconds.
+After all mongo containers started the "mongosetup" container will configure replica sets in 40 seconds.
 
 ## Containers
 
